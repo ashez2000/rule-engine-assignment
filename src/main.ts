@@ -1,12 +1,18 @@
 import { Lexer } from './rule_engine/lexer.js'
+import { Parser } from './rule_engine/parser.js'
 
-const rule = `
-((age > 30 AND department = 'Sales') OR 
-(age < 25 AND department = 'Marketing')) AND
-(salary > 50000 OR experience > 5)
-`
+const rule = `(a = b) AND b < 100`
 
-const l = new Lexer(rule)
-const tokens = l.scanTokens()
+try {
+  const l = new Lexer(rule)
 
-console.log(tokens)
+  const tokens = l.scanTokens()
+  console.log(tokens)
+
+  const parser = new Parser(tokens)
+  const expr = parser.parse()
+
+  console.log('res', JSON.stringify(expr, null, 4))
+} catch (err) {
+  console.log(err)
+}
