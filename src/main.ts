@@ -1,21 +1,14 @@
-import { Eval } from './rule_engine/evaluator.js'
-import { Lexer } from './rule_engine/lexer.js'
-import { Parser } from './rule_engine/parser.js'
-
-const rule = `'a' = 'b'`
+import { createRule, evaluateRule } from './rule_engine/engine.js'
 
 try {
-  const l = new Lexer(rule)
+  const args = process.argv.slice(2)
+  const rule = args[0]
+  const data = JSON.parse(args[1] ?? '{}')
 
-  const tokens = l.scanTokens()
-  console.log(tokens)
-
-  const parser = new Parser(tokens)
-  const expr = parser.parse()
-  console.log('res', JSON.stringify(expr, null, 4))
-  if (expr) {
-    const e = new Eval(new Map())
-    console.log(e.eval(expr))
+  const ast = createRule(rule)
+  if (ast) {
+    const value = evaluateRule(ast, data)
+    console.log('result:', value)
   }
 } catch (err) {
   console.log(err)

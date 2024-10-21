@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "tsx ./src/main.ts"
+    "start": "tsx ./src/main.ts",
+    "test": "tsx --test ./src/*_test.ts"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
